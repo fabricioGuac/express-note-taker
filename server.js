@@ -3,8 +3,10 @@ const express = require('express');
 const app = express();
 // Get path
 const path = require('path');
+const { title } = require('process');
 // get fs
 const fs = require('fs').promises;
+const {v4: uuid} = require('uuid');
 
 // Gets an available port from the process enviroment or defaults to port 3001
 const PORT = process.env.PORT || 3001;
@@ -22,7 +24,7 @@ app.get('/api/notes',  async (req, res) => {
     const notes = JSON.parse(data);
     res.json(notes);
 } catch (err){
-    console.log(err);
+    console.error(err);
     res.status(500).send('An error reading from storage has occurred');
 }});
 
@@ -34,10 +36,30 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
+app.post('/api/notes',  async (req, res) => {
+    try{
+    const {title, text} = req.body;
+    const newNote ={
+        title,
+        text,
+        id: uuid()
+    }
+    const data = await fs.readFile('./db/db.json', 'utf-8');
+    const parsed = JSON.parse(data);
+    parsed.push(newNote);
+    const finalNote = JSON.stringify(parsed, null, 2);
+    await fs.writeFile('./db/db.json', (finalNote));
+    console.log('Note added successfully');
+    res.send('Note added successfully');
+    }catch(err){
+        console.error(err);
+        res.status(500).send('Error adding new note');
+    }
 
+});
 
-app.post('/api/notes', (req, res) => {
-    console.log(req.body);
+app.delete('api/notes/:id', (req, res) => {
+
 })
 
 // Starts the server and listen to conections in the available port
