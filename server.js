@@ -49,7 +49,6 @@ app.post('/api/notes',  async (req, res) => {
     parsed.push(newNote);
     const finalNote = JSON.stringify(parsed, null, 2);
     await fs.writeFile('./db/db.json', (finalNote));
-    console.log('Note added successfully');
     res.send('Note added successfully');
     }catch(err){
         console.error(err);
@@ -58,8 +57,20 @@ app.post('/api/notes',  async (req, res) => {
 
 });
 
-app.delete('api/notes/:id', (req, res) => {
-
+app.delete('/api/notes/:id', async (req, res) => {
+    try{
+    const delId = req.params.id;
+    const data = await fs.readFile('./db/db.json', 'utf-8');
+    const parsed = JSON.parse(data);
+    const newList = parsed.filter((note) => note.id !== delId);
+    console.log(newList);
+    const finalList = JSON.stringify(newList, null, 2);
+    await fs.writeFile('./db/db.json', (finalList));
+    res.send('Note deleted successfully');
+    }catch(err){
+        console.error(err);
+        res.status(500).send('Error deleting note');
+    }
 })
 
 // Starts the server and listen to conections in the available port
