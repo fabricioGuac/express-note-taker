@@ -18,6 +18,10 @@ app.use(express.urlencoded({extended: true}));
 // Uses middleware to access the public folder
 app.use(express.static('public'));
 
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
+});
+
 app.get('/api/notes',  async (req, res) => {
     try{
     const data =  await fs.readFile('./db/db.json','utf8');
@@ -28,9 +32,7 @@ app.get('/api/notes',  async (req, res) => {
     res.status(500).send('An error reading from storage has occurred');
 }});
 
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
-});
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
@@ -49,7 +51,7 @@ app.post('/api/notes',  async (req, res) => {
     parsed.push(newNote);
     const finalNote = JSON.stringify(parsed, null, 2);
     await fs.writeFile('./db/db.json', (finalNote));
-    res.send('Note added successfully');
+    res.status(200).send('Note added successfully');
     }catch(err){
         console.error(err);
         res.status(500).send('Error adding new note');
@@ -66,7 +68,7 @@ app.delete('/api/notes/:id', async (req, res) => {
     console.log(newList);
     const finalList = JSON.stringify(newList, null, 2);
     await fs.writeFile('./db/db.json', (finalList));
-    res.send('Note deleted successfully');
+    res.status(200).send('Note deleted successfully');
     }catch(err){
         console.error(err);
         res.status(500).send('Error deleting note');

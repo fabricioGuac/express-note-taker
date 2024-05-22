@@ -10,15 +10,15 @@ N/A
 
 ## Usage
 
-
+To use this project, visit the deployed application via the provided link and click the "Get Started" button in the center of the homepage. This will direct you to the Notes section, where you can view the list of existing notes. To add new notes, enter the note title and note text, then click the save button. To delete notes, click the trash icon next to the note you want to remove
 
 ## Screenshot of the deployed app
 
-
+![Note-taker](public\assets\img\express-note-taker-lx3c.onrender.com_notes.png)
 
 ## URL of the deployed app
 
-
+https://express-note-taker-lx3c.onrender.com
 
 ## Credits
 
