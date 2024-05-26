@@ -1,9 +1,8 @@
 // Get express and create an instance of it
 const express = require('express');
 const app = express();
-// Get path and the api.js
-const path = require('path');
-const api = require('./routes/api');
+// Get the routes 
+const routes = require('./routes');
 
 // Gets an available port from the process enviroment or defaults to port 3001
 const PORT = process.env.PORT || 3001;
@@ -12,19 +11,10 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// Uses middleware to access the public folder and the api routes
+// Uses middleware to access the public folder and the  routes
 app.use(express.static('public'));
-app.use('/api', api);
+app.use('/', routes);
 
-// Sets the ruote to return the note.html file 
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'));
-});
-
-// Set a catch-all route for the index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
-});
 
 // Starts the server and listen to conections in the available port
 app.listen(PORT, () => {

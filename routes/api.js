@@ -1,10 +1,10 @@
 // Require the necessary packages and functions
-const router = require('express').Router();
+const api = require('express').Router();
 const {v4: uuid} = require('uuid');
 const {Reader, Writer} = require('../helpers/readWrite');
 
 // Route to retrieve notes from the database and return them as JSON
-router.get('/notes',  async (req, res) => {
+api.get('/notes',  async (req, res) => {
     try{
     const data = await Reader('./db/db.json');
     res.status(200).json(data);
@@ -14,7 +14,7 @@ router.get('/notes',  async (req, res) => {
 }});
 
 // Route to post new notes to the database
-router.post('/notes',  async (req, res) => {
+api.post('/notes',  async (req, res) => {
     try{
 
     // Extracts the title and text from the request body
@@ -47,7 +47,7 @@ router.post('/notes',  async (req, res) => {
 });
 
 // Route to delete notes from the database
-router.delete('/notes/:id', async (req, res) => {
+api.delete('/notes/:id', async (req, res) => {
     try{
     // Gets the id of the target from the request body
     const delId = req.params.id;
@@ -71,4 +71,4 @@ router.delete('/notes/:id', async (req, res) => {
 })
 
 // Exports the api routes
-module.exports = router;
+module.exports = api;
