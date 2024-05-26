@@ -14,7 +14,7 @@ To use this project, visit the deployed application via the provided link and cl
 
 ## Screenshot of the deployed app
 
-![Note-taker](public\assets\img\express-note-taker-lx3c.onrender.com_notes.png)
+![Note-taker](public/assets/img/express-note-taker-lx3c.onrender.com_notes.png)
 
 ## URL of the deployed app
 
