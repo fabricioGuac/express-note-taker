@@ -18,7 +18,7 @@ To use this project, visit the deployed application via the provided link and cl
 
 ## URL of the deployed app
 
-https://express-note-taker-lx3c.onrender.com
+[https://express-note-taker-lx3c.onrender.com](https://express-note-taker-lx3c.onrender.com)
 
 ## Credits
 
